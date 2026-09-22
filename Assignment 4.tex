@@ -1,0 +1,1362 @@
+\documentclass[aspectratio=169]{beamer}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{bm}
+\usepackage{tikz}
+\usepackage{graphicx}
+
+\title{Vectors, Vector Spaces and Linear Algebra}
+\author{Gayathri P S}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Contents}
+\tableofcontents
+\end{frame}
+
+
+\section{Foundations}
+
+\begin{frame}{Sets and Algebraic Structures}
+\textbf{Set:} A well-defined collection of objects.
+\[
+A=\{1,2,3,4\}
+\]
+Important operations:
+\[
+A\cup B,\quad A\cap B,\quad A-B,\quad A^c,\quad A\times B
+\]
+
+An algebraic structure is a set with a binary operation:
+\[
+(S,*)
+\]
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Structure} & \textbf{Additional property}\\
+\hline
+Magma & Closure\\
+Semigroup & Closure + Associativity\\
+Monoid & Semigroup + Identity\\
+Group & Monoid + Inverse\\
+Abelian Group & Group + Commutativity\\
+\hline
+\end{tabular}
+\end{center}
+
+\textbf{ML connection:} Sets describe datasets/classes, while algebraic structures provide the mathematical foundation for transformations and operations.
+\end{frame}
+
+\begin{frame}{Vectors and Vector Spaces}
+A vector is an ordered collection of numbers:
+\[
+\mathbf v=
+\begin{bmatrix}
+v_1\\v_2\\\vdots\\v_n
+\end{bmatrix},
+\qquad
+\|\mathbf v\|=\sqrt{\sum_i v_i^2}.
+\]
+
+Vector addition:
+\[
+\mathbf u+\mathbf v
+=
+\begin{bmatrix}
+u_1+v_1\\u_2+v_2\\\vdots
+\end{bmatrix}
+\]
+
+Scalar multiplication:
+\[
+\alpha\mathbf v=
+\begin{bmatrix}
+\alpha v_1\\\alpha v_2\\\vdots
+\end{bmatrix}
+\]
+
+A vector space is closed under vector addition and scalar multiplication.
+
+\textbf{Polynomial example:}
+\[
+p(x)=a+bx+cx^2
+\longleftrightarrow
+\begin{bmatrix}a\\b\\c\end{bmatrix}
+\]
+
+\textbf{ML:} A data point is represented by a feature vector.
+\end{frame}
+
+\begin{frame}{Linear Combinations, Hyperplanes and Perceptron}
+A linear combination is
+\[
+c_1\mathbf v_1+c_2\mathbf v_2+\cdots+c_k\mathbf v_k.
+\]
+
+The equation
+\[
+ax+by+c=0
+\]
+represents a line, while
+\[
+\mathbf w^T\mathbf x+b=0
+\]
+represents a hyperplane.
+
+\[
+\boxed{\mathbf w=\text{normal vector to the hyperplane}}
+\]
+
+A perceptron computes
+\[
+z=\mathbf w^T\mathbf x+b.
+\]
+
+Using
+\[
+\mathbf w^T\mathbf x
+=
+\|\mathbf w\|\|\mathbf x\|\cos\theta,
+\]
+the angle between $\mathbf w$ and $\mathbf x$ influences classification.
+
+\[
+\theta<90^\circ\Rightarrow z>0,\qquad
+\theta>90^\circ\Rightarrow z<0
+\]
+
+Thus, a perceptron is a geometric linear classifier.
+\end{frame}
+
+\begin{frame}{Mathematical Spaces}
+Different mathematical spaces provide different ways to study mathematical objects.
+
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Space} & \textbf{Main concept}\\
+\hline
+Vector Space & Addition and scalar multiplication\\
+Metric Space & Distance\\
+Inner Product Space & Angle and orthogonality\\
+Hilbert Space & Complete inner product space\\
+Topological Space & Continuity and convergence\\
+\hline
+\end{tabular}
+\end{center}
+
+For an inner product:
+\[
+\langle\mathbf u,\mathbf v\rangle=\mathbf u^T\mathbf v
+\]
+
+Angle:
+\[
+\cos\theta=
+\frac{\mathbf u^T\mathbf v}
+{\|\mathbf u\|\|\mathbf v\|}
+\]
+
+\textbf{AI/ML applications:}
+\[
+\text{Metric}\rightarrow\text{KNN/Clustering}
+\]
+\[
+\text{Inner Product}\rightarrow\text{Similarity}
+\]
+\[
+\text{Hilbert Space}\rightarrow\text{Kernel Methods}
+\]
+
+These concepts form the foundation for the linear algebra topics that follow.
+\end{frame}
+
+\section{Vectors}
+
+\begin{frame}{Vectors}
+A vector is a mathematical object having magnitude and direction.
+
+\[
+\mathbf v=
+\begin{bmatrix}
+v_1\\v_2\\\vdots\\v_n
+\end{bmatrix}
+\]
+
+Examples:
+\[
+\mathbf v=\begin{bmatrix}3\\2\end{bmatrix},
+\qquad
+\mathbf u=\begin{bmatrix}1\\4\\2\end{bmatrix}
+\]
+
+Magnitude:
+\[
+\|\mathbf v\|=\sqrt{v_1^2+v_2^2+\cdots+v_n^2}
+\]
+
+In machine learning, a data point can be represented as a feature vector:
+\[
+\mathbf x=[x_1,x_2,\ldots,x_n]^T.
+\]
+\end{frame}
+
+\begin{frame}{Coordinate System}
+A coordinate system provides a way to represent points and vectors.
+
+\textbf{2D:}
+\[
+P=(x,y),\qquad
+\mathbf p=\begin{bmatrix}x\\y\end{bmatrix}
+\]
+
+\textbf{3D:}
+\[
+P=(x,y,z),\qquad
+\mathbf p=
+\begin{bmatrix}x\\y\\z\end{bmatrix}
+\]
+
+Standard basis vectors in $\mathbb R^3$:
+\[
+\mathbf i=\begin{bmatrix}1\\0\\0\end{bmatrix},
+\quad
+\mathbf j=\begin{bmatrix}0\\1\\0\end{bmatrix},
+\quad
+\mathbf k=\begin{bmatrix}0\\0\\1\end{bmatrix}
+\]
+
+Thus:
+\[
+\mathbf v=x\mathbf i+y\mathbf j+z\mathbf k.
+\]
+\end{frame}
+
+\begin{frame}{Vector Addition}
+For
+\[
+\mathbf u=\begin{bmatrix}u_1\\u_2\end{bmatrix},
+\quad
+\mathbf v=\begin{bmatrix}v_1\\v_2\end{bmatrix},
+\]
+
+\[
+\mathbf u+\mathbf v=
+\begin{bmatrix}
+u_1+v_1\\u_2+v_2
+\end{bmatrix}
+\]
+
+Example:
+\[
+\begin{bmatrix}2\\3\end{bmatrix}
++
+\begin{bmatrix}4\\1\end{bmatrix}
+=
+\begin{bmatrix}6\\4\end{bmatrix}
+\]
+
+Geometrically, vector addition follows the parallelogram law.
+
+\[
+\boxed{\text{Resultant}=\text{diagonal of parallelogram}}
+\]
+\end{frame}
+
+\begin{frame}{Scalar Multiplication}
+For scalar $\alpha$ and vector $\mathbf v$:
+
+\[
+\alpha\mathbf v=
+\begin{bmatrix}
+\alpha v_1\\
+\alpha v_2\\
+\vdots\\
+\alpha v_n
+\end{bmatrix}
+\]
+
+Example:
+\[
+3\begin{bmatrix}2\\1\end{bmatrix}
+=
+\begin{bmatrix}6\\3\end{bmatrix}
+\]
+
+Magnitude:
+\[
+\|\alpha\mathbf v\|=|\alpha|\|\mathbf v\|
+\]
+
+\begin{itemize}
+\item $\alpha>1$: vector becomes longer
+\item $0<\alpha<1$: vector becomes shorter
+\item $\alpha<0$: direction reverses
+\item $\alpha=0$: zero vector
+\end{itemize}
+\end{frame}
+
+\section{Linear Combinations and Basis}
+
+\begin{frame}{Linear Combinations}
+A linear combination of vectors $\mathbf v_1,\ldots,\mathbf v_n$ is
+
+\[
+c_1\mathbf v_1+c_2\mathbf v_2+\cdots+c_n\mathbf v_n.
+\]
+
+Example:
+\[
+\mathbf v_1=\begin{bmatrix}1\\0\end{bmatrix},
+\quad
+\mathbf v_2=\begin{bmatrix}0\\1\end{bmatrix}
+\]
+
+\[
+3\mathbf v_1+2\mathbf v_2
+=
+\begin{bmatrix}3\\2\end{bmatrix}
+\]
+
+Therefore every vector in $\mathbb R^2$ can be expressed as a linear combination of the standard basis vectors.
+\end{frame}
+
+\begin{frame}{Span}
+The span of vectors is the set of all their linear combinations.
+
+\[
+\operatorname{span}\{\mathbf v_1,\ldots,\mathbf v_n\}
+=
+\left\{
+\sum_{i=1}^{n}c_i\mathbf v_i:c_i\in\mathbb R
+\right\}
+\]
+
+For
+\[
+\mathbf e_1=\begin{bmatrix}1\\0\end{bmatrix},
+\quad
+\mathbf e_2=\begin{bmatrix}0\\1\end{bmatrix},
+\]
+
+\[
+\operatorname{span}\{\mathbf e_1,\mathbf e_2\}
+=\mathbb R^2.
+\]
+
+Geometrically:
+\[
+\text{one independent vector}\rightarrow\text{line}
+\]
+\[
+\text{two independent vectors in }\mathbb R^2\rightarrow\text{plane}.
+\]
+\end{frame}
+
+\begin{frame}{Basis Vectors}
+A basis is a set of vectors that:
+
+\begin{enumerate}
+\item spans the vector space
+\item is linearly independent
+\end{enumerate}
+
+Standard basis of $\mathbb R^2$:
+\[
+\mathbf e_1=\begin{bmatrix}1\\0\end{bmatrix},
+\quad
+\mathbf e_2=\begin{bmatrix}0\\1\end{bmatrix}
+\]
+
+Every vector has a unique representation:
+\[
+\mathbf v=x\mathbf e_1+y\mathbf e_2.
+\]
+
+For example:
+\[
+\begin{bmatrix}4\\3\end{bmatrix}
+=
+4\mathbf e_1+3\mathbf e_2.
+\]
+\end{frame}
+
+\section{Matrices and Transformations}
+
+\begin{frame}{Matrices as Linear Transformations}
+A matrix can represent a linear transformation.
+
+\[
+A:\mathbb R^n\rightarrow\mathbb R^m
+\]
+
+\[
+\mathbf x\mapsto A\mathbf x
+\]
+
+Example:
+\[
+A=
+\begin{bmatrix}
+2&0\\
+0&3
+\end{bmatrix},
+\quad
+\mathbf x=
+\begin{bmatrix}x\\y\end{bmatrix}
+\]
+
+\[
+A\mathbf x=
+\begin{bmatrix}
+2x\\3y
+\end{bmatrix}
+\]
+
+The transformation scales the $x$-direction by $2$ and the $y$-direction by $3$.
+\end{frame}
+
+\begin{frame}{Matrix Multiplication as Composition}
+Suppose
+\[
+\mathbf x\xrightarrow{B}B\mathbf x
+\xrightarrow{A}A(B\mathbf x).
+\]
+
+Therefore:
+\[
+A(B\mathbf x)=(AB)\mathbf x.
+\]
+
+Hence:
+\[
+\boxed{AB=\text{composition of }B\text{ followed by }A}
+\]
+
+Matrix multiplication is generally not commutative:
+\[
+AB\neq BA.
+\]
+
+This reflects the fact that applying transformations in different orders generally gives different results.
+\end{frame}
+
+\begin{frame}{Three-Dimensional Linear Transformations}
+A linear transformation in 3D maps:
+\[
+\mathbb R^3\rightarrow\mathbb R^3.
+\]
+
+Common transformations:
+
+\begin{itemize}
+\item Scaling
+\item Rotation
+\item Reflection
+\item Shearing
+\end{itemize}
+
+Scaling:
+\[
+A=
+\begin{bmatrix}
+2&0&0\\
+0&3&0\\
+0&0&1
+\end{bmatrix}
+\]
+
+\[
+A
+\begin{bmatrix}x\\y\\z\end{bmatrix}
+=
+\begin{bmatrix}2x\\3y\\z\end{bmatrix}.
+\]
+\end{frame}
+
+\begin{frame}{3D Rotation}
+Rotation around the $z$-axis:
+
+\[
+R_z(\theta)=
+\begin{bmatrix}
+\cos\theta&-\sin\theta&0\\
+\sin\theta&\cos\theta&0\\
+0&0&1
+\end{bmatrix}
+\]
+
+The transformed vector is:
+
+\[
+\mathbf x'=R_z(\theta)\mathbf x.
+\]
+
+Applications:
+\begin{itemize}
+\item Computer graphics
+\item Computer vision
+\item Robotics
+\item 3D image processing
+\end{itemize}
+\end{frame}
+
+\section{Determinants and Inverses}
+
+\begin{frame}{Determinant}
+For
+\[
+A=
+\begin{bmatrix}
+a&b\\c&d
+\end{bmatrix},
+\]
+
+\[
+\boxed{\det(A)=ad-bc}
+\]
+
+Example:
+\[
+A=
+\begin{bmatrix}
+2&3\\1&4
+\end{bmatrix}
+\]
+
+\[
+\det(A)=2(4)-3(1)=5.
+\]
+
+Geometric interpretation:
+\[
+|\det(A)|=\text{area scaling factor}
+\]
+
+For a 3D transformation:
+\[
+|\det(A)|=\text{volume scaling factor}.
+\]
+
+If
+\[
+\det(A)=0,
+\]
+the transformation collapses dimensions and $A$ is singular.
+\end{frame}
+
+\begin{frame}{Inverse Matrices}
+The inverse reverses a matrix transformation:
+
+\[
+A^{-1}A=AA^{-1}=I.
+\]
+
+For
+\[
+A=
+\begin{bmatrix}a&b\\c&d\end{bmatrix},
+\]
+
+\[
+A^{-1}
+=
+\frac{1}{ad-bc}
+\begin{bmatrix}
+d&-b\\-c&a
+\end{bmatrix}
+\]
+
+provided:
+\[
+ad-bc\neq0.
+\]
+
+Therefore:
+\[
+\boxed{\det(A)\neq0\iff A^{-1}\text{ exists}}
+\]
+for a square matrix.
+\end{frame}
+
+\section{Column and Null Spaces}
+
+\begin{frame}{Column Space}
+The column space is the span of the columns of a matrix.
+
+\[
+\operatorname{Col}(A)
+=
+\operatorname{span}\{\text{columns of }A\}
+\]
+
+Example:
+\[
+A=
+\begin{bmatrix}
+1&2\\
+2&4
+\end{bmatrix}
+\]
+
+Since
+\[
+\begin{bmatrix}2\\4\end{bmatrix}
+=
+2\begin{bmatrix}1\\2\end{bmatrix},
+\]
+
+\[
+\operatorname{Col}(A)
+=
+\operatorname{span}
+\left\{
+\begin{bmatrix}1\\2\end{bmatrix}
+\right\}.
+\]
+
+The column space represents all possible outputs $A\mathbf x$.
+\end{frame}
+
+\begin{frame}{Null Space}
+The null space contains all vectors mapped to the zero vector.
+
+\[
+\boxed{
+\operatorname{Null}(A)=
+\{\mathbf x:A\mathbf x=\mathbf0\}
+}
+\]
+
+For
+\[
+A=
+\begin{bmatrix}
+1&2\\
+2&4
+\end{bmatrix},
+\]
+
+solve:
+\[
+x+2y=0.
+\]
+
+Thus:
+\[
+x=-2y
+\]
+
+and
+\[
+\mathbf x
+=
+t\begin{bmatrix}-2\\1\end{bmatrix}.
+\]
+
+Therefore:
+\[
+\boxed{
+\operatorname{Null}(A)=
+\operatorname{span}
+\left\{
+\begin{bmatrix}-2\\1\end{bmatrix}
+\right\}
+}
+\]
+\end{frame}
+
+\section{Nonsquare Matrices}
+
+\begin{frame}{Nonsquare Matrices as Transformations}
+A matrix need not be square.
+
+For example:
+\[
+A=
+\begin{bmatrix}
+1&0&2\\
+0&1&3
+\end{bmatrix}
+\]
+
+is a $2\times3$ matrix.
+
+Therefore:
+\[
+\boxed{A:\mathbb R^3\rightarrow\mathbb R^2}
+\]
+
+and
+\[
+A
+\begin{bmatrix}x\\y\\z\end{bmatrix}
+=
+\begin{bmatrix}
+x+2z\\
+y+3z
+\end{bmatrix}.
+\]
+
+In general:
+\[
+\boxed{
+m\times n\text{ matrix}:
+\mathbb R^n\rightarrow\mathbb R^m
+}
+\]
+
+This is useful for dimensionality reduction and feature transformations.
+\end{frame}
+
+\section{Dot Product and Duality}
+
+\begin{frame}{Dot Product}
+For
+\[
+\mathbf u=
+\begin{bmatrix}u_1\\\vdots\\u_n\end{bmatrix},
+\quad
+\mathbf v=
+\begin{bmatrix}v_1\\\vdots\\v_n\end{bmatrix},
+\]
+
+\[
+\boxed{
+\mathbf u\cdot\mathbf v
+=
+\sum_{i=1}^{n}u_iv_i
+}
+\]
+
+or:
+\[
+\mathbf u\cdot\mathbf v=\mathbf u^T\mathbf v.
+\]
+
+Geometric form:
+\[
+\boxed{
+\mathbf u\cdot\mathbf v
+=
+\|\mathbf u\|\|\mathbf v\|\cos\theta
+}
+\]
+
+If:
+\[
+\mathbf u\cdot\mathbf v=0,
+\]
+the vectors are orthogonal.
+\end{frame}
+
+\begin{frame}{Dot Product and Duality}
+A vector can define a linear functional.
+
+For
+\[
+\mathbf w=
+\begin{bmatrix}w_1\\w_2\end{bmatrix},
+\]
+
+define:
+\[
+f(\mathbf x)=\mathbf w^T\mathbf x.
+\]
+
+Thus:
+\[
+f(x,y)=w_1x+w_2y.
+\]
+
+The set of linear functionals on a vector space forms its dual space.
+
+\[
+\boxed{
+\mathbf w\longrightarrow
+\mathbf w^T(\cdot)
+}
+\]
+
+This concept is important in linear algebra, optimization and machine learning.
+\end{frame}
+
+\section{Cross Product}
+
+\begin{frame}{Cross Product}
+For vectors in $\mathbb R^3$:
+
+\[
+\mathbf u=
+\begin{bmatrix}u_1\\u_2\\u_3\end{bmatrix},
+\quad
+\mathbf v=
+\begin{bmatrix}v_1\\v_2\\v_3\end{bmatrix},
+\]
+
+\[
+\mathbf u\times\mathbf v=
+\begin{bmatrix}
+u_2v_3-u_3v_2\\
+u_3v_1-u_1v_3\\
+u_1v_2-u_2v_1
+\end{bmatrix}.
+\]
+
+The result is perpendicular to both $\mathbf u$ and $\mathbf v$.
+
+\[
+\boxed{
+(\mathbf u\times\mathbf v)\cdot\mathbf u=0
+}
+\]
+
+\[
+\boxed{
+(\mathbf u\times\mathbf v)\cdot\mathbf v=0
+}
+\]
+\end{frame}
+
+\begin{frame}{Cross Product: Geometric Meaning}
+Magnitude:
+
+\[
+\boxed{
+\|\mathbf u\times\mathbf v\|
+=
+\|\mathbf u\|\|\mathbf v\|\sin\theta
+}
+\]
+
+This equals the area of the parallelogram formed by $\mathbf u$ and $\mathbf v$.
+
+\[
+\boxed{
+A_{\text{parallelogram}}
+=
+\|\mathbf u\times\mathbf v\|
+}
+\]
+
+Triangle area:
+\[
+\boxed{
+A_{\text{triangle}}
+=
+\frac12\|\mathbf u\times\mathbf v\|
+}
+\]
+
+The cross product therefore provides a normal vector and measures area.
+\end{frame}
+
+\begin{frame}{Cross Product and Linear Transformations}
+Let:
+\[
+\mathbf n=\mathbf u\times\mathbf v.
+\]
+
+Then $\mathbf n$ is normal to the plane containing $\mathbf u$ and $\mathbf v$.
+
+A plane can be written as:
+\[
+\mathbf n^T(\mathbf x-\mathbf x_0)=0.
+\]
+
+Equivalently:
+\[
+\boxed{\mathbf n^T\mathbf x=c}
+\]
+
+For an invertible $3\times3$ matrix:
+\[
+\boxed{
+(A\mathbf u)\times(A\mathbf v)
+=
+\det(A)A^{-T}(\mathbf u\times\mathbf v)
+}
+\]
+
+This connects cross products with determinants, inverse transformations, area and orientation.
+\end{frame}
+
+\section{Cramer's Rule}
+
+\begin{frame}{Cramer's Rule}
+For:
+\[
+A\mathbf x=\mathbf b,
+\]
+
+Cramer's rule uses determinants to solve the system.
+
+For:
+\[
+a_1x+b_1y=c_1,
+\qquad
+a_2x+b_2y=c_2,
+\]
+
+\[
+D=
+\begin{vmatrix}
+a_1&b_1\\
+a_2&b_2
+\end{vmatrix}
+\]
+
+\[
+x=\frac{D_x}{D},
+\qquad
+y=\frac{D_y}{D}.
+\]
+
+The determinant $D_x$ replaces the first column of $A$ by $\mathbf b$, while $D_y$ replaces the second column.
+\end{frame}
+
+\begin{frame}{Cramer's Rule: Example}
+Solve:
+\[
+2x+y=5
+\]
+\[
+x-y=1.
+\]
+
+\[
+D=
+\begin{vmatrix}
+2&1\\1&-1
+\end{vmatrix}
+=-3
+\]
+
+\[
+D_x=
+\begin{vmatrix}
+5&1\\1&-1
+\end{vmatrix}
+=-6
+\]
+
+\[
+x=\frac{-6}{-3}=2.
+\]
+
+\[
+D_y=
+\begin{vmatrix}
+2&5\\1&1
+\end{vmatrix}
+=-3
+\]
+
+\[
+y=\frac{-3}{-3}=1.
+\]
+
+\[
+\boxed{x=2,\qquad y=1}
+\]
+\end{frame}
+
+\section{Change of Basis}
+
+\begin{frame}{Change of Basis}
+The same vector can have different coordinate representations in different bases.
+
+Standard basis:
+\[
+E=
+\left\{
+\begin{bmatrix}1\\0\end{bmatrix},
+\begin{bmatrix}0\\1\end{bmatrix}
+\right\}
+\]
+
+Another basis:
+\[
+B=
+\left\{
+\begin{bmatrix}1\\1\end{bmatrix},
+\begin{bmatrix}1\\-1\end{bmatrix}
+\right\}.
+\]
+
+For:
+\[
+\mathbf v=
+\begin{bmatrix}3\\1\end{bmatrix},
+\]
+
+we find:
+\[
+\mathbf v=
+2\begin{bmatrix}1\\1\end{bmatrix}
++
+1\begin{bmatrix}1\\-1\end{bmatrix}.
+\]
+
+Thus:
+\[
+[\mathbf v]_B=
+\begin{bmatrix}2\\1\end{bmatrix}.
+\]
+\end{frame}
+
+\begin{frame}{Change-of-Basis Matrix}
+Put the basis vectors into the columns of $P$:
+
+\[
+P=
+\begin{bmatrix}
+1&1\\
+1&-1
+\end{bmatrix}.
+\]
+
+Then:
+\[
+[\mathbf v]_E=P[\mathbf v]_B.
+\]
+
+Therefore:
+\[
+\boxed{
+[\mathbf v]_B=P^{-1}[\mathbf v]_E
+}
+\]
+
+The vector remains the same geometrically; only its coordinate representation changes.
+\end{frame}
+
+\section{Eigenvalues and Eigenvectors}
+
+\begin{frame}{Eigenvectors and Eigenvalues}
+An eigenvector is a vector whose direction remains unchanged under a linear transformation.
+
+\[
+\boxed{
+A\mathbf v=\lambda\mathbf v
+}
+\]
+
+where:
+
+\begin{itemize}
+\item $\mathbf v$ = eigenvector
+\item $\lambda$ = eigenvalue
+\end{itemize}
+
+The transformation only scales the eigenvector.
+
+If $\lambda>1$, it expands.
+
+If $0<\lambda<1$, it contracts.
+
+If $\lambda<0$, its direction reverses.
+\end{frame}
+
+\begin{frame}{Finding Eigenvalues}
+Starting with:
+\[
+A\mathbf v=\lambda\mathbf v
+\]
+
+\[
+(A-\lambda I)\mathbf v=0.
+\]
+
+For a nonzero $\mathbf v$:
+\[
+\det(A-\lambda I)=0.
+\]
+
+This is the characteristic equation.
+
+Example:
+\[
+A=
+\begin{bmatrix}
+2&0\\0&3
+\end{bmatrix}.
+\]
+
+\[
+\det(A-\lambda I)
+=
+(2-\lambda)(3-\lambda)=0.
+\]
+
+Hence:
+\[
+\boxed{\lambda_1=2,\qquad\lambda_2=3}
+\]
+\end{frame}
+
+\begin{frame}{Eigenvector Example}
+For:
+\[
+A=
+\begin{bmatrix}
+2&0\\0&3
+\end{bmatrix},
+\]
+
+for $\lambda=2$:
+
+\[
+A
+\begin{bmatrix}1\\0\end{bmatrix}
+=
+2
+\begin{bmatrix}1\\0\end{bmatrix}.
+\]
+
+Thus:
+\[
+\boxed{
+\mathbf v_1=
+\begin{bmatrix}1\\0\end{bmatrix}
+}
+\]
+
+For $\lambda=3$:
+
+\[
+A
+\begin{bmatrix}0\\1\end{bmatrix}
+=
+3
+\begin{bmatrix}0\\1\end{bmatrix}.
+\]
+
+Thus:
+\[
+\boxed{
+\mathbf v_2=
+\begin{bmatrix}0\\1\end{bmatrix}
+}
+\]
+\end{frame}
+
+\begin{frame}{Applications of Eigenvalues and Eigenvectors}
+Eigenvalues and eigenvectors are used in:
+
+\begin{itemize}
+\item Principal Component Analysis (PCA)
+\item Image processing
+\item Dimensionality reduction
+\item Dynamical systems
+\item Differential equations
+\item Google PageRank
+\item Quantum mechanics
+\end{itemize}
+
+In PCA, eigenvectors of the covariance matrix identify important directions of variation in the data.
+\end{frame}
+
+\section{Vector Spaces}
+
+\begin{frame}{Vector Spaces}
+A vector space is a set closed under vector addition and scalar multiplication and satisfying the vector-space axioms.
+
+Examples:
+\[
+\mathbb R^2,\qquad
+\mathbb R^3,\qquad
+\mathbb R^n
+\]
+
+Polynomial vector space:
+\[
+P_2=
+\{a+bx+cx^2:a,b,c\in\mathbb R\}.
+\]
+
+A polynomial:
+\[
+p(x)=a+bx+cx^2
+\]
+
+can be represented as:
+\[
+\begin{bmatrix}a\\b\\c\end{bmatrix}.
+\]
+
+Therefore:
+\[
+\boxed{P_2\cong\mathbb R^3}
+\]
+\end{frame}
+
+\section{Machine Learning Connection}
+
+\begin{frame}{Vectors and the Perceptron}
+A perceptron receives an input vector:
+
+\[
+\mathbf x=
+\begin{bmatrix}
+x_1\\x_2\\\vdots\\x_n
+\end{bmatrix}
+\]
+
+and has a weight vector:
+
+\[
+\mathbf w=
+\begin{bmatrix}
+w_1\\w_2\\\vdots\\w_n
+\end{bmatrix}.
+\]
+
+The weighted sum is:
+
+\[
+z=\mathbf w^T\mathbf x+b.
+\]
+
+The decision boundary is:
+
+\[
+\boxed{
+\mathbf w^T\mathbf x+b=0
+}
+\]
+
+which is a hyperplane.
+\end{frame}
+
+\begin{frame}{Perceptron and Angle Between Vectors}
+Using the dot product:
+
+\[
+\mathbf w^T\mathbf x
+=
+\|\mathbf w\|\|\mathbf x\|\cos\theta.
+\]
+
+Therefore:
+
+\[
+z=
+\|\mathbf w\|\|\mathbf x\|\cos\theta+b.
+\]
+
+Ignoring $b$:
+
+\[
+\theta<90^\circ
+\Rightarrow
+\mathbf w^T\mathbf x>0
+\]
+
+\[
+\theta=90^\circ
+\Rightarrow
+\mathbf w^T\mathbf x=0
+\]
+
+\[
+\theta>90^\circ
+\Rightarrow
+\mathbf w^T\mathbf x<0.
+\]
+
+Thus the angle between the input vector and weight vector influences classification.
+\end{frame}
+
+\begin{frame}{Complete Conceptual Connection}
+\[
+\boxed{
+\text{Vectors}
+\rightarrow
+\text{Linear Combinations}
+\rightarrow
+\text{Span}
+\rightarrow
+\text{Basis}
+\rightarrow
+\text{Vector Spaces}
+}
+\]
+
+\[
+\boxed{
+\text{Matrices}
+\rightarrow
+\text{Linear Transformations}
+\rightarrow
+\text{Composition}
+\rightarrow
+\det(A)
+\rightarrow
+A^{-1}
+}
+\]
+
+\[
+\boxed{
+\text{Dot Product}
+\rightarrow
+\text{Angle}
+\rightarrow
+\text{Orthogonality}
+\rightarrow
+\text{Duality}
+}
+\]
+
+\[
+\boxed{
+\text{Eigenvectors}
+\rightarrow
+\text{Special Directions}
+\rightarrow
+\text{PCA and ML}
+}
+\]
+
+\[
+\boxed{
+\mathbf w^T\mathbf x+b=0
+\rightarrow
+\text{Hyperplane}
+\rightarrow
+\text{Perceptron}
+}
+\]
+\end{frame}
+
+\begin{frame}{Summary}
+\begin{itemize}
+\item Vectors represent quantities with magnitude and direction.
+\item Linear combinations generate spans and lead to basis vectors.
+\item Matrices represent linear transformations.
+\item Matrix multiplication represents composition of transformations.
+\item Determinants measure area or volume scaling and determine invertibility.
+\item Column space describes possible outputs; null space describes vectors mapped to zero.
+\item Dot products measure alignment and provide angles and orthogonality.
+\item Cross products produce normal vectors and measure area in $\mathbb R^3$.
+\item Cramer's rule solves linear systems using determinants.
+\item Change of basis changes coordinate representation without changing the vector itself.
+\item Eigenvectors identify directions preserved by a transformation.
+\item Vector spaces provide the mathematical framework for all these concepts.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\centering
+\Huge Thank You
+\end{frame}
+
+\end{document}
